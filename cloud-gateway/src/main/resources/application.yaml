@@ -1,0 +1,45 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+  #Oauth2 Configuration
+  autoconfigure:
+    # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
+    exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          gateway-service:
+            provider: uaa
+            client-id: gateway-service
+            client-secret: gateway-service-secret
+            authorization-grant-type: authorization_code
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid,profile,email,resource.read
+        provider:
+          uaa:
+            authorization-uri: http://localhost:9090/uaa/oauth/authorize
+            token-uri: http://localhost:9090/uaa/oauth/token
+            user-info-uri: http://localhost:9090/uaa/userinfo
+            user-name-attribute: sub
+            jwk-set-uri: http://localhost:9090/uaa/token_keys
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.web.HttpLogging: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.cloud.gateway: DEBUG
