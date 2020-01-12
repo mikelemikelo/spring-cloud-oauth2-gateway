@@ -10,9 +10,9 @@
 
 
     <properties>
-        <spring-cloud-dependencies.version>Greenwich.SR3</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>Hoxton.SR1</spring-cloud-dependencies.version>
         <!-- Spring Boot version compatible with Spring Cloud Release train -->
-        <spring-boot.version>2.1.9.RELEASE</spring-boot.version>
+        <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -59,13 +59,35 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+
+        <!-- Eureka -->
         <!--
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
         -->
-        <!-- Eureka -->
+
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
+        -->
+
+
     </dependencies>
 
 

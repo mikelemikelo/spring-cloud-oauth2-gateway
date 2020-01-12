@@ -11,4 +11,7 @@ public class RedirectToIndexFileController {
     public RedirectView redirect() {
         return new RedirectView("/index.html");
     }
+
+
+
 }

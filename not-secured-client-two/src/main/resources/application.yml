@@ -5,6 +5,11 @@ spring:
   application:
     name: client-two
 
+# To disable Hystrix in Feign
+feign:
+  hystrix:
+    enabled: false
+
 eureka:
   client:
     registerWithEureka: true

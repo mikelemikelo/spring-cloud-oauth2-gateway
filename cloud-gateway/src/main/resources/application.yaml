@@ -1,5 +1,7 @@
 server:
   port: 8090
+
+
 spring:
   application:
     name: gateway-service
@@ -10,14 +12,13 @@ spring:
           enabled: true
           lower-case-service-id: true
 
-  #Oauth2 Configuration
-  autoconfigure:
-    # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
-    exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration
   thymeleaf:
     cache: false
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/uaa/oauth/token
       client:
         registration:
           gateway-service:
@@ -27,6 +28,13 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid,profile,email,resource.read
+          #model-manage:
+            #provider: uaa
+            #client-id: model-manage
+            #client-secret: model-manage-secret
+            #authorization-grant-type: authorization_code
+            #redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+            #scope: openid,profile,email,resource.read
         provider:
           uaa:
             authorization-uri: http://localhost:9090/uaa/oauth/authorize
@@ -34,12 +42,16 @@ spring:
             user-info-uri: http://localhost:9090/uaa/userinfo
             user-name-attribute: sub
             jwk-set-uri: http://localhost:9090/uaa/token_keys
+          #resourceserver:
+          #jwt:
+          #jwk-set-uri: http://localhost:9090/uaa/token_keys
+
 
 logging:
   level:
     root: INFO
     org.springframework.web: INFO
-    org.springframework.web.HttpLogging: DEBUG
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
-    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.HttpLogging: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+    org.springframework.cloud.gateway: INFO
