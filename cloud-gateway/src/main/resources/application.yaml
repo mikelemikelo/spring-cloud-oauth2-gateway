@@ -19,32 +19,43 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9090/uaa/oauth/token
+          public-key: classpath:public.txt
+          key-value: |
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxFpooGKdko9KCjHI/avO
+            lXvuPZtMlF2nzKkPl9SMwSubm/AqpoNDJntRE95g5lZP0Y4wm/k89yCJPWeY/k6A
+            Jnw6n+6X9imUEDyYvVP9qxrpe9pM+gmVV/Hf+zNM7lEtVZbA6pIPFozeqkCaCG2W
+            y33gzAQecpCHa+DML2gDxKg/U4BIlF8ZB1WXcESe0EXucJI8fhQrMhrwS0dXhsIz
+            q+5zGGYJYhzSp6TMMrSYoKPzyZT+QbPbxYloMugQ41ki1KDuakXTZBF35l2aNgPi
+            LLcORKDWwO62xfgeXChd4Qdd6tSRUT4Q8Piwu+Crhe0Y+HruqlcCJ3EnyqOyxPnC
+            pQIDAQAB
+            -----END PUBLIC KEY-----
       client:
+        provider:
+          uaa:
+            issuer-uri: http://localhost:9090/uaa/oauth/token
+            authorization-uri: http://localhost:9090/uaa/oauth/authorize
+            token-uri: http://localhost:9090/uaa/oauth/token
+            user-info-uri: http://localhost:9090/uaa/userinfo
+            user-name-attribute: sub
+            jwk-set-uri: http://localhost:9090/uaa/token_keys
         registration:
           gateway-service:
             provider: uaa
             client-id: gateway-service
             client-secret: gateway-service-secret
             authorization-grant-type: authorization_code
+            #authorization-grant-type: client_credentials
             redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid,profile,email,resource.read
-          #model-manage:
-            #provider: uaa
-            #client-id: model-manage
-            #client-secret: model-manage-secret
-            #authorization-grant-type: authorization_code
-            #redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
-            #scope: openid,profile,email,resource.read
-        provider:
-          uaa:
-            authorization-uri: http://localhost:9090/uaa/oauth/authorize
-            token-uri: http://localhost:9090/uaa/oauth/token
-            user-info-uri: http://localhost:9090/uaa/userinfo
-            user-name-attribute: sub
-            jwk-set-uri: http://localhost:9090/uaa/token_keys
-          #resourceserver:
-          #jwt:
-          #jwk-set-uri: http://localhost:9090/uaa/token_keys
+          model-manage:
+            provider: uaa
+            client-id: model-manage
+            client-secret: model-manage-secret
+            authorization-grant-type: client_credentials
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid,profile,email,resource.read
+
 
 
 logging:
